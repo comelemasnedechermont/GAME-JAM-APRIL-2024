@@ -4,6 +4,8 @@
 
 # 💡 Usage
 
+`pip` + `install` + `pygame`
+
 `python` + `game.py`
 
 # 🫂 Groupe
