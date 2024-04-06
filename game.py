@@ -1,6 +1,7 @@
 import pygame
 import sys
 from pygame.locals import *
+import moviepy.editor
 
 pygame.init()
 
@@ -85,22 +86,23 @@ def main():
     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     pygame.display.set_caption("Open")
 
-    background_image = load_image("assets/window98.png")
+    background_image = load_image("assets/oui.jpg")
     background_image = pygame.transform.scale(background_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
     icons = [
-        Icon("assets/tuto.png", (100, 100), "Message de l'icône", False, "assets/tutoMessage.png"),
-        Icon("assets/secret.png", (300, 100), "Message secret", True, "assets/tutoMessage.png"),
+        Icon("assets/tuto.png", (700, 450), "Message de l'icône", False, "assets/tutoMessage.png"),
+        Icon("assets/secret.png", (750, 450), "Message secret", True, "assets/tutoMessage.png"),
 
-        Icon("assets/file.png", (100, 150), "Message secret", False, "assets/loremIpsum.png"),
-        Icon("assets/file.png", (100, 200), "Message secret", False, "assets/loremIpsum1.png"),
-        Icon("assets/file.png", (100, 250), "Message secret", False, "assets/loremIpsum2.png"),
-        Icon("assets/file.png", (100, 300), "Message secret", False, "assets/baitBinary.png"),
+        Icon("assets/file.png", (300, 200), "Message secret", False, "assets/loremIpsum.png"),
+        Icon("assets/file.png", (500, 300), "Message secret", False, "assets/loremIpsum1.png"),
+        Icon("assets/file.png", (1200, 400), "Message secret", False, "assets/loremIpsum2.png"),
+        Icon("assets/file.png", (900, 500), "Message secret", False, "assets/baitBinary.png"),
 
-        Icon("assets/file.png", (100, 300), "Message secret", False, "assets/arabe.png"),
-        Icon("assets/file.png", (100, 350), "Message secret", False, "assets/coréen.png"),
-        Icon("assets/file.png", (100, 400), "Message secret", False, "assets/japonais.png"),
-        Icon("assets/file.png", (100, 450), "Message secret", False, "assets/allemand.png"),
+        Icon("assets/file.png", (1100, 200), "Message secret", False, "assets/arabe.png"),
+        Icon("assets/file.png", (1300, 300), "Message secret", False, "assets/coréen.png"),
+        Icon("assets/file.png", (300, 700), "Message secret", False, "assets/japonais.png"),
+        Icon("assets/file.png", (500, 800), "Message secret", False, "assets/allemand.png"),
+
 
 
     ]
@@ -122,12 +124,14 @@ def main():
                             if icon.requires_password:
                                 password_input, popup_rect = ask_password(screen)
                                 if password_input == PASSWORD:
-                                    popups.append(Popup(icon.new_image_path, (200, 200)))
+                                    video = moviepy.editor.VideoFileClip("assets/Never gonna Meow you up.mp4", target_resolution=(1000,1500))
+                                    video.preview()
+                                    #popups.append(Popup(icon.new_image_path, (200, 200)))
                                 pass
                             else:
                                 popups.append(Popup(icon.new_image_path, (200, 200)))
                         for popup in popups:
-                            close_area = pygame.Rect(popup.rect.right - 20, popup.rect.top, 20, 20)
+                            close_area = pygame.Rect(popup.rect.right - 40, popup.rect.top, 40, 40)
                             if close_area.collidepoint(event.pos):
                                 popups.remove(popup)
                                 break
