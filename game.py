@@ -91,6 +91,18 @@ def main():
     icons = [
         Icon("assets/tuto.png", (100, 100), "Message de l'icône", False, "assets/tutoMessage.png"),
         Icon("assets/secret.png", (300, 100), "Message secret", True, "assets/tutoMessage.png"),
+
+        Icon("assets/file.png", (100, 150), "Message secret", False, "assets/loremIpsum.png"),
+        Icon("assets/file.png", (100, 200), "Message secret", False, "assets/loremIpsum1.png"),
+        Icon("assets/file.png", (100, 250), "Message secret", False, "assets/loremIpsum2.png"),
+        Icon("assets/file.png", (100, 300), "Message secret", False, "assets/baitBinary.png"),
+
+        Icon("assets/file.png", (100, 300), "Message secret", False, "assets/arabe.png"),
+        Icon("assets/file.png", (100, 350), "Message secret", False, "assets/coréen.png"),
+        Icon("assets/file.png", (100, 400), "Message secret", False, "assets/japonais.png"),
+        Icon("assets/file.png", (100, 450), "Message secret", False, "assets/allemand.png"),
+
+
     ]
     popups = []
 
@@ -118,7 +130,7 @@ def main():
                             close_area = pygame.Rect(popup.rect.right - 20, popup.rect.top, 20, 20)
                             if close_area.collidepoint(event.pos):
                                 popups.remove(popup)
-                                break  # Sortir de la boucle une fois que nous avons trouvé et fermé le pop-up
+                                break
 
                         
 
