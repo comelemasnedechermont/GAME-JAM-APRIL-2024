@@ -21,77 +21,19 @@ def load_image(image_path):
         print("Impossible de charger l'image :", image_path)
         raise SystemExit(str(e))
 
-def main():
-    screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-    pygame.display.set_caption("Open")
+class Icon:
+    def __init__(self, image_path, position, message, requires_password, path):
+        self.base_image = load_image(image_path)
+        self.image = self.base_image
+        self.rect = self.image.get_rect(topleft=position)
+        self.requires_password = requires_password
+        self.message = message
+        self.new_image_path = path
 
-    background_image = load_image("assets/window98.png")
-    background_image = pygame.transform.scale(background_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
-
-    icons = [
-        Icon("assets/tuto.png", (100, 100), "Ceci est le message de l'icône 1"),
-        Icon("assets/secret.png", (300, 100), "Ceci est le message de l'icône 2"),
-    ]
-    popup_image = load_image("assets/newWindow.png")
-    popup_image_rect = popup_image.get_rect()
-    popup_image_rect.topleft = (200, 200)
-    popup_top_right_corner = popup_image_rect.topright
-    popup_displayed = False
-    password_input = ''
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                for icon in icons:
-                    if icon.rect.collidepoint(event.pos):
-                        if icon.image_path in PASSWORD_REQUIRED_ICONS:
-                            password_input, popup_rect = ask_password(screen)
-                            if password_input == PASSWORD:
-                                popup_displayed = True
-                                current_message = icon.message
-                            else:
-                                print("Mot de passe incorrect")
-                                password_input = ''  # Réinitialiser le mot de passe saisi
-                                ##shake_popup(screen, popup_rect)  # Appel de la fonction de secousse
-                        else:
-                            popup_displayed = True
-                            current_message = icon.message
-                if popup_displayed and (popup_top_right_corner[0] - 20 <= event.pos[0] <= popup_top_right_corner[0]) and (popup_top_right_corner[1] <= event.pos[1] <= popup_top_right_corner[1] + 20):
-                    popup_displayed = False
-
-        screen.blit(background_image, (0, 0))
-
-        for icon in icons:
-            screen.blit(icon.image, icon.rect)
-
-        if popup_displayed:
-            screen.blit(popup_image, popup_image_rect)
-            display_popup(screen, popup_image_rect, current_message)
-
-        pygame.display.flip()
-    pygame.quit()
-    sys.exit()
-
-def shake_popup(screen, popup_rect):
-    original_pos = popup_rect.topleft
-    displacement = 50  # Augmentez cette valeur pour une secousse plus intense
-    shake_time = 10  # Nombre d'itérations de secousse
-    for _ in range(shake_time):
-        popup_rect.x += displacement
-        pygame.display.update(popup_rect)  # Rafraîchir uniquement la zone de la fenêtre secouée
-        pygame.time.wait(20)
-        popup_rect.x -= displacement * 2
-        pygame.display.update(popup_rect)  # Rafraîchir uniquement la zone de la fenêtre secouée
-        pygame.time.wait(20)
-        popup_rect.x += displacement
-        pygame.display.update(popup_rect)  # Rafraîchir uniquement la zone de la fenêtre secouée
-        pygame.time.wait(20)
-    popup_rect.topleft = original_pos  # Rétablir la position initiale
+class Popup:
+    def __init__(self, image_path, position):
+        self.image = load_image(image_path)
+        self.rect = self.image.get_rect(topleft=position)
 
 def ask_password(screen):
     password_input = ''
@@ -138,19 +80,61 @@ def ask_password(screen):
             pygame.draw.rect(screen, BLACK, cursor_rect)
         pygame.display.flip()
 
-class Icon:
-    def __init__(self, image_path, position, message):
-        self.image = load_image(image_path)
-        self.rect = self.image.get_rect(topleft=position)
-        self.message = message
-        self.image_path = image_path
 
-def display_popup(screen, popup_image_rect, message):
-    font = pygame.font.Font(None, 20)
-    text_rendered = font.render(message, True, BLACK)
-    text_rect = text_rendered.get_rect()
-    text_rect.bottomleft = (300, 300)    
-    screen.blit(text_rendered, text_rect)
+def main():
+    screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+    pygame.display.set_caption("Open")
+
+    background_image = load_image("assets/window98.png")
+    background_image = pygame.transform.scale(background_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
+
+    icons = [
+        Icon("assets/tuto.png", (100, 100), "Message de l'icône", False, "assets/tutoMessage.png"),
+        Icon("assets/secret.png", (300, 100), "Message secret", True, "assets/tutoMessage.png"),
+    ]
+    popups = []
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    return pygame.quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:  # Left mouse button
+                    for icon in icons:
+                        if icon.rect.collidepoint(event.pos):
+                            if icon.requires_password:
+                                password_input, popup_rect = ask_password(screen)
+                                if password_input == PASSWORD:
+                                    popups.append(Popup(icon.new_image_path, (200, 200)))
+                                pass
+                            else:
+                                popups.append(Popup(icon.new_image_path, (200, 200)))
+                        for popup in popups:
+                            close_area = pygame.Rect(popup.rect.right - 20, popup.rect.top, 20, 20)
+                            if close_area.collidepoint(event.pos):
+                                popups.remove(popup)
+                                break  # Sortir de la boucle une fois que nous avons trouvé et fermé le pop-up
+
+                        
+
+
+        screen.blit(background_image, (0, 0))
+
+        for icon in icons:
+            screen.blit(icon.image, icon.rect)
+
+        for popup in popups:
+            screen.blit(popup.image, popup.rect)
+
+        pygame.display.flip()
+
+    pygame.quit()
+    sys.exit()
 
 if __name__ == "__main__":
     main()
