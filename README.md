@@ -6,6 +6,8 @@
 
 `pip` + `install` + `pygame`
 
+`pip` + `install` + `moviepy`
+
 `python` + `game.py`
 
 # 🫂 Groupe
