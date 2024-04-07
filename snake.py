@@ -11,8 +11,8 @@ GREEN = (0, 255, 0)
 WIDTH, HEIGHT = 1000, 600
 CELL_SIZE = 20
 
-UP = (0, -1)
-DOWN = (0, 1)
+TEST = 1
+
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
@@ -97,7 +97,7 @@ def startSnake():
                     snake.direction = LEFT
                 elif event.key == pygame.K_RIGHT and snake.direction != LEFT:
                     snake.direction = RIGHT
-        if score >= 1:
+        if score >= 10:
             font = pygame.font.Font(None, 60)
             text = font.render("Voici un morceau du mot de passe 'zP1qR8'", True, WHITE)
             text2 = font.render("Appuyez sur ESC pour revenir au menu", True, WHITE)

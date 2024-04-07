@@ -1,15 +1,13 @@
 import pygame
 import random
 
-# Paramètres du jeu
 SCREEN_WIDTH = 300
 SCREEN_HEIGHT = 600
 BLOCK_SIZE = 30
 GRID_WIDTH = SCREEN_WIDTH // BLOCK_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // BLOCK_SIZE
-FPS = 15  # Changer cette valeur pour ajuster la vitesse du jeu
+FPS = 15
 
-# Couleurs
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (128, 128, 128)
@@ -21,7 +19,6 @@ GREEN = (0, 128, 0)
 PURPLE = (128, 0, 128)
 RED = (255, 0, 0)
 
-# Formes possibles
 SHAPES = [
     [[1, 1, 1],
      [0, 1, 0]],
@@ -126,6 +123,7 @@ class Tetris:
                                           SCREEN_HEIGHT // 2 - game_over_text.get_height() // 2))
 
     def run(self):
+        tetris = Tetris()
         while not self.game_over:
             self.screen.fill(BLACK)
             for event in pygame.event.get():
@@ -146,6 +144,8 @@ class Tetris:
                             self.current_piece['y'] -= 1
                     elif event.key == pygame.K_SPACE:
                         self.rotate_piece()
+                    elif event.key == pygame.K_ESCAPE:
+                        self.game_over = True
 
             self.current_piece['y'] += 1
             if self.check_collision():
@@ -159,12 +159,24 @@ class Tetris:
             self.draw_grid()
             self.draw_piece()
             self.draw_score()
-            if self.game_over:
-                self.game_over_screen()
+
+            if self.score >= 100:
+                # Arrêter le jeu si le score atteint ou dépasse 100
+                self.game_over = True
             pygame.display.flip()
             self.clock.tick(10)
 
-        pygame.quit()
+        # Afficher l'écran de victoire après la fin du jeu
+        self.screen.fill(BLACK)
+        font = pygame.font.SysFont(None, 72)
+        victory_text = font.render("VICTORY", True, WHITE)
+        self.screen.blit(victory_text, (SCREEN_WIDTH // 2 - victory_text.get_width() // 2,
+                                        SCREEN_HEIGHT // 2 - victory_text.get_height() // 2))
+        pygame.display.flip()
+
+
+
+
 
     def rotate_piece(self):
         shape = self.current_piece['shape']
@@ -172,7 +184,3 @@ class Tetris:
         if self.current_piece['x'] + len(rotated_shape[0]) > GRID_WIDTH or self.current_piece['y'] + len(rotated_shape) > GRID_HEIGHT:
             return
         self.current_piece['shape'] = rotated_shape
-
-if __name__ == "__main__":
-    game = Tetris()
-    game.run()

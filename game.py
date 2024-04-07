@@ -1,8 +1,9 @@
 import pygame
 import sys
-from pygame.locals import *
 import moviepy.editor
+from pygame.locals import *
 from snake import *
+from tetris import *
 
 pygame.init()
 
@@ -24,13 +25,12 @@ def load_image(image_path):
         raise SystemExit(str(e))
 
 class Icon:
-    def __init__(self, image_path, position, password, snake, end, path):
+    def __init__(self, image_path, position, password, game, path):
         self.base_image = load_image(image_path)
         self.image = self.base_image
         self.rect = self.image.get_rect(topleft=position)
         self.requires_password = password
-        self.snake = snake
-        self.end = end
+        self.game = game
         self.new_image_path = path
 
 class Popup:
@@ -92,19 +92,20 @@ def main():
     background_image = pygame.transform.scale(background_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
     icons = [
-        Icon("assets/tuto.png", (700, 450), "", False, False, "assets/tutoMessage.png"),
-        Icon("assets/secret.png", (750, 450), "secret", False, True,""),
-        Icon("assets/game.png", (1400, 800), "test", True, False,""),
-        Icon("assets/file.png", (300, 200), "", False, False, "assets/loremIpsum.png"),
-        Icon("assets/file.png", (500, 300), "", False, False, "assets/loremIpsum1.png"),
-        Icon("assets/file.png", (1200, 400), "", False, False, "assets/loremIpsum2.png"),
-        Icon("assets/file.png", (900, 500), "", False, False, "assets/baitBinary.png"),
-        Icon("assets/file.png", (600, 400), "", False, False, "assets/clue3.png"),
-        Icon("assets/file.png", (1300, 500), "", False, False, "assets/cesar.png"),
-        Icon("assets/file.png", (1100, 200), "", False, False, "assets/arabe.png"),
-        Icon("assets/file.png", (1300, 300), "", False, False, "assets/coréen.png"),
-        Icon("assets/file.png", (300, 700), "", False, False, "assets/japonais.png"),
-        Icon("assets/file.png", (500, 800), "", False, False,"assets/allemand.png"),
+        Icon("assets/tuto.png", (700, 450), "", "", "assets/tutoMessage.png"),
+        Icon("assets/secret.png", (750, 450), "secret", "video",""),
+        Icon("assets/game.png", (1400, 800), "test", "snake",""),
+        Icon("assets/game.png", (700, 800), "", "tetris",""),
+        Icon("assets/file.png", (300, 200), "", "", "assets/loremIpsum.png"),
+        Icon("assets/file.png", (500, 300), "", "", "assets/loremIpsum1.png"),
+        Icon("assets/file.png", (1200, 400), "", "", "assets/loremIpsum2.png"),
+        Icon("assets/file.png", (900, 500), "", "", "assets/baitBinary.png"),
+        Icon("assets/file.png", (600, 400), "", "", "assets/clue3.png"),
+        Icon("assets/file.png", (1300, 500), "", "", "assets/cesar.png"),
+        Icon("assets/file.png", (1100, 200), "", "", "assets/arabe.png"),
+        Icon("assets/file.png", (1300, 300), "", "", "assets/coréen.png"),
+        Icon("assets/file.png", (300, 700), "", "", "assets/japonais.png"),
+        Icon("assets/file.png", (500, 800), "", "", "assets/allemand.png"),
     ]
     popups = []
 
@@ -124,20 +125,28 @@ def main():
                             if icon.requires_password:
                                 password_input, popup_rect = ask_password(screen)
                                 if password_input == icon.requires_password:
-                                    if icon.snake:
+                                    if icon.game == "snake":
                                         startSnake()
                                         screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-                                    elif icon.end:
+                                    elif icon.game == "tetris":
+                                        game = Tetris()
+                                        game.run()
+                                        screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+                                    elif icon.game == "video":
                                         video = moviepy.editor.VideoFileClip("assets/Never gonna Meow you up.mp4", target_resolution=(1000,1500))
                                         video.preview()
                                     else:
                                         popups.append(Popup(icon.new_image_path, (200, 200)))
                                 pass
                             else:
-                                if icon.snake:
+                                if icon.game == "snake":
                                     startSnake()
                                     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-                                elif icon.end:
+                                elif icon.game == "tetris":
+                                        game = Tetris()
+                                        game.run()
+                                        screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+                                elif icon.game == "video":
                                     video = moviepy.editor.VideoFileClip("assets/Never gonna Meow you up.mp4", target_resolution=(1000,1500))
                                     video.preview()
                                 else:
