@@ -94,6 +94,7 @@ def main():
         Icon("assets/game.png", (1400, 800), "basilic", "snake",""),
         Icon("assets/game.png", (700, 800), "", "tetris",""),
         Icon("assets/file.png", (300, 200), "", "", "assets/Enigme.png"),
+        Icon("assets/file.png", (300, 400), "", "", "assets/cesar2.png"),
         Icon("assets/file.png", (200, 200), "", "", "assets/loremIpsum.png"),
         Icon("assets/file.png", (500, 300), "", "", "assets/loremIpsum1.png"),
         Icon("assets/file.png", (1200, 400), "", "", "assets/loremIpsum2.png"),
