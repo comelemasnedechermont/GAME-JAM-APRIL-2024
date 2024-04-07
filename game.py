@@ -86,20 +86,22 @@ def ask_password(screen):
 
 def main():
     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-    pygame.display.set_caption("Open")
+    pygame.display.set_caption("OpenTheFile")
 
     background_image = load_image("assets/oui.jpg")
     background_image = pygame.transform.scale(background_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
     icons = [
         Icon("assets/tuto.png", (700, 450), False, False, False, "assets/tutoMessage.png"),
-        Icon("assets/secret.png", (750, 450), True, False, True,"assets/tutoMessage.png"),
+        Icon("assets/secret.png", (750, 450), True, False, True,""),
+        Icon("assets/game.png", (1400, 800), True, True, False,""),
         Icon("assets/file.png", (300, 200), False, False, False, "assets/loremIpsum.png"),
         Icon("assets/file.png", (500, 300), False, False, False, "assets/loremIpsum1.png"),
         Icon("assets/file.png", (1200, 400), False, False, False, "assets/loremIpsum2.png"),
         Icon("assets/file.png", (900, 500), False, False, False, "assets/baitBinary.png"),
         Icon("assets/file.png", (600, 400), False, False, False, "assets/clue3.png"),
-        Icon("assets/file.png", (1100, 200), True, True, False, "assets/arabe.png"),
+        Icon("assets/file.png", (1300, 500), False, False, False, "assets/cesar.png"),
+        Icon("assets/file.png", (1100, 200), False, False, False, "assets/arabe.png"),
         Icon("assets/file.png", (1300, 300), False, False, False, "assets/coréen.png"),
         Icon("assets/file.png", (300, 700), False, False, False, "assets/japonais.png"),
         Icon("assets/file.png", (500, 800), False, False, False,"assets/allemand.png"),
