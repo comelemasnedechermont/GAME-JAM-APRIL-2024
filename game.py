@@ -24,11 +24,11 @@ def load_image(image_path):
         raise SystemExit(str(e))
 
 class Icon:
-    def __init__(self, image_path, position, requires_password, snake, end, path):
+    def __init__(self, image_path, position, password, snake, end, path):
         self.base_image = load_image(image_path)
         self.image = self.base_image
         self.rect = self.image.get_rect(topleft=position)
-        self.requires_password = requires_password
+        self.requires_password = password
         self.snake = snake
         self.end = end
         self.new_image_path = path
@@ -92,19 +92,19 @@ def main():
     background_image = pygame.transform.scale(background_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
 
     icons = [
-        Icon("assets/tuto.png", (700, 450), False, False, False, "assets/tutoMessage.png"),
-        Icon("assets/secret.png", (750, 450), True, False, True,""),
-        Icon("assets/game.png", (1400, 800), True, True, False,""),
-        Icon("assets/file.png", (300, 200), False, False, False, "assets/loremIpsum.png"),
-        Icon("assets/file.png", (500, 300), False, False, False, "assets/loremIpsum1.png"),
-        Icon("assets/file.png", (1200, 400), False, False, False, "assets/loremIpsum2.png"),
-        Icon("assets/file.png", (900, 500), False, False, False, "assets/baitBinary.png"),
-        Icon("assets/file.png", (600, 400), False, False, False, "assets/clue3.png"),
-        Icon("assets/file.png", (1300, 500), False, False, False, "assets/cesar.png"),
-        Icon("assets/file.png", (1100, 200), False, False, False, "assets/arabe.png"),
-        Icon("assets/file.png", (1300, 300), False, False, False, "assets/coréen.png"),
-        Icon("assets/file.png", (300, 700), False, False, False, "assets/japonais.png"),
-        Icon("assets/file.png", (500, 800), False, False, False,"assets/allemand.png"),
+        Icon("assets/tuto.png", (700, 450), "", False, False, "assets/tutoMessage.png"),
+        Icon("assets/secret.png", (750, 450), "secret", False, True,""),
+        Icon("assets/game.png", (1400, 800), "test", True, False,""),
+        Icon("assets/file.png", (300, 200), "", False, False, "assets/loremIpsum.png"),
+        Icon("assets/file.png", (500, 300), "", False, False, "assets/loremIpsum1.png"),
+        Icon("assets/file.png", (1200, 400), "", False, False, "assets/loremIpsum2.png"),
+        Icon("assets/file.png", (900, 500), "", False, False, "assets/baitBinary.png"),
+        Icon("assets/file.png", (600, 400), "", False, False, "assets/clue3.png"),
+        Icon("assets/file.png", (1300, 500), "", False, False, "assets/cesar.png"),
+        Icon("assets/file.png", (1100, 200), "", False, False, "assets/arabe.png"),
+        Icon("assets/file.png", (1300, 300), "", False, False, "assets/coréen.png"),
+        Icon("assets/file.png", (300, 700), "", False, False, "assets/japonais.png"),
+        Icon("assets/file.png", (500, 800), "", False, False,"assets/allemand.png"),
     ]
     popups = []
 
@@ -123,7 +123,7 @@ def main():
                         if icon.rect.collidepoint(event.pos):
                             if icon.requires_password:
                                 password_input, popup_rect = ask_password(screen)
-                                if password_input == PASSWORD:
+                                if password_input == icon.requires_password:
                                     if icon.snake:
                                         startSnake()
                                         screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
