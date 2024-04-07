@@ -167,12 +167,13 @@ class Tetris:
             self.clock.tick(10)
 
         # Afficher l'écran de victoire après la fin du jeu
-        self.screen.fill(BLACK)
-        font = pygame.font.SysFont(None, 72)
-        victory_text = font.render("VICTORY", True, WHITE)
-        self.screen.blit(victory_text, (SCREEN_WIDTH // 2 - victory_text.get_width() // 2,
-                                        SCREEN_HEIGHT // 2 - victory_text.get_height() // 2))
-        pygame.display.flip()
+        for x in range(10000) :
+            self.screen.fill(BLACK)
+            font = pygame.font.SysFont(None, 72)
+            victory_text = font.render("VICTORY", True, WHITE)
+            self.screen.blit(victory_text, (SCREEN_WIDTH // 2 - victory_text.get_width() // 2,
+                                            SCREEN_HEIGHT // 2 - victory_text.get_height() // 2))
+            pygame.display.flip()
 
 
 
