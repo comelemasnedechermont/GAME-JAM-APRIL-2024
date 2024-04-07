@@ -99,7 +99,7 @@ def startSnake():
                     snake.direction = RIGHT
         if score >= 10:
             font = pygame.font.Font(None, 60)
-            text = font.render("Voici un morceau du mot de passe 'zP1qR8'", True, WHITE)
+            text = font.render("Voici un morceau du mot de passe 'P1q5'", True, WHITE)
             text2 = font.render("Appuyez sur ESC pour revenir au menu", True, WHITE)
             text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
             text_rect2 = text.get_rect(center=(WIDTH // 2, HEIGHT // 4))

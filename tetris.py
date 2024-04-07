@@ -167,19 +167,18 @@ class Tetris:
             pygame.display.flip()
             self.clock.tick(10)
 
-        # Afficher l'écran de victoire après la fin du jeu
         if win :
-            for x in range(10000) :
-                self.screen.fill(BLACK)
-                font = pygame.font.SysFont(None, 72)
-                victory_text = font.render("VICTORY", True, WHITE)
-                self.screen.blit(victory_text, (SCREEN_WIDTH // 2 - victory_text.get_width() // 2,
-                                                SCREEN_HEIGHT // 2 - victory_text.get_height() // 2))
+            self.screen = pygame.display.set_mode((1000, 600))
+            font = pygame.font.SysFont(None, 60)
+            self.screen.fill(BLACK)
+            for x in range(20000) :
+                text = font.render("Voici un morceau du mot de passe '7X9z'", True, WHITE)
+                text2 = font.render("Appuyez sur ESC pour revenir au menu", True, WHITE)
+                text_rect = text.get_rect(center=(1000 // 2, 600 // 2))
+                text_rect2 = text.get_rect(center=(1000 // 2, 600 // 4))
+                self.screen.blit(text, text_rect)
+                self.screen.blit(text2, text_rect2)
                 pygame.display.flip()
-
-
-
-
 
     def rotate_piece(self):
         shape = self.current_piece['shape']

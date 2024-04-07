@@ -13,9 +13,6 @@ WINDOW_HEIGHT = 1000
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-PASSWORD_REQUIRED_ICONS = ["assets/secret.png"]
-PASSWORD = "test"
-
 def load_image(image_path):
     try:
         image = pygame.image.load(image_path)
@@ -93,7 +90,7 @@ def main():
 
     icons = [
         Icon("assets/tuto.png", (700, 450), "", "", "assets/tutoMessage.png"),
-        Icon("assets/secret.png", (750, 450), "secret", "video",""),
+        Icon("assets/secret.png", (750, 450), "7X9zP1q5rsy", "video",""),
         Icon("assets/game.png", (1400, 800), "test", "snake",""),
         Icon("assets/game.png", (700, 800), "", "tetris",""),
         Icon("assets/file.png", (300, 200), "", "", "assets/loremIpsum.png"),
