@@ -124,6 +124,7 @@ class Tetris:
 
     def run(self):
         tetris = Tetris()
+        win = False
         while not self.game_over:
             self.screen.fill(BLACK)
             for event in pygame.event.get():
@@ -161,27 +162,23 @@ class Tetris:
             self.draw_score()
 
             if self.score >= 100:
-                # Arrêter le jeu si le score atteint ou dépasse 100
                 self.game_over = True
+                win = True
             pygame.display.flip()
             self.clock.tick(10)
 
-        # Afficher l'écran de victoire après la fin du jeu
-        for x in range(10000) :
-            self.screen.fill(BLACK)
+        if win :
             self.screen = pygame.display.set_mode((1000, 600))
-            font = pygame.font.SysFont(None, 72)
-            text = font.render("Voici un morceau du mot de passe 'zP1qR8'", True, WHITE)
-            text2 = font.render("Appuyez sur ESC pour revenir au menu", True, WHITE)
-            text_rect = text.get_rect(center=(1000 // 2, 600 // 2))
-            text_rect2 = text.get_rect(center=(1000 // 2, 600 // 4))
-            self.screen.blit(text, text_rect)
-            self.screen.blit(text2, text_rect2)
-            pygame.display.flip()
-
-
-
-
+            font = pygame.font.SysFont(None, 60)
+            self.screen.fill(BLACK)
+            for x in range(20000) :
+                text = font.render("Voici un morceau du mot de passe '7X9z'", True, WHITE)
+                text2 = font.render("Appuyez sur ESC pour revenir au menu", True, WHITE)
+                text_rect = text.get_rect(center=(1000 // 2, 600 // 2))
+                text_rect2 = text.get_rect(center=(1000 // 2, 600 // 4))
+                self.screen.blit(text, text_rect)
+                self.screen.blit(text2, text_rect2)
+                pygame.display.flip()
 
     def rotate_piece(self):
         shape = self.current_piece['shape']
