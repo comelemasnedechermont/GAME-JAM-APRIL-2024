@@ -11,8 +11,8 @@ GREEN = (0, 255, 0)
 WIDTH, HEIGHT = 1000, 600
 CELL_SIZE = 20
 
-TEST = 1
-
+UP = (0, -1)
+DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
