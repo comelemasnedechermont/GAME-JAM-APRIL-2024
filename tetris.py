@@ -124,6 +124,7 @@ class Tetris:
 
     def run(self):
         tetris = Tetris()
+        win = False
         while not self.game_over:
             self.screen.fill(BLACK)
             for event in pygame.event.get():
@@ -161,19 +162,20 @@ class Tetris:
             self.draw_score()
 
             if self.score >= 100:
-                # Arrêter le jeu si le score atteint ou dépasse 100
                 self.game_over = True
+                win = True
             pygame.display.flip()
             self.clock.tick(10)
 
         # Afficher l'écran de victoire après la fin du jeu
-        for x in range(10000) :
-            self.screen.fill(BLACK)
-            font = pygame.font.SysFont(None, 72)
-            victory_text = font.render("VICTORY", True, WHITE)
-            self.screen.blit(victory_text, (SCREEN_WIDTH // 2 - victory_text.get_width() // 2,
-                                            SCREEN_HEIGHT // 2 - victory_text.get_height() // 2))
-            pygame.display.flip()
+        if win :
+            for x in range(10000) :
+                self.screen.fill(BLACK)
+                font = pygame.font.SysFont(None, 72)
+                victory_text = font.render("VICTORY", True, WHITE)
+                self.screen.blit(victory_text, (SCREEN_WIDTH // 2 - victory_text.get_width() // 2,
+                                                SCREEN_HEIGHT // 2 - victory_text.get_height() // 2))
+                pygame.display.flip()
 
 
 
